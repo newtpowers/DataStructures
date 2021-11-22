@@ -49,10 +49,9 @@ class LinkedList:
 
     def insert_values(self, data_list):
         self.head = None
-        #iterate through linked list
+        # iterate through linked list
         for data in data_list:
             self.insert_at_end(data)
-
 
     def get_length(self):
         count = 0
@@ -62,10 +61,9 @@ class LinkedList:
             itr = itr.next
         return count
 
-
     def remove_at(self, index):
         # throw error if outside of boundary
-        if index<0 or index >= self.get_length():
+        if index < 0 or index >= self.get_length():
             raise Exception("Invalid index")
 
         # trying to remove a head
@@ -87,6 +85,28 @@ class LinkedList:
             itr = itr.next
             count += 1
 
+    def insert_at(self, index, data):
+        # throw error if outside of boundary
+        if index < 0 or index >= self.get_length():
+            raise Exception("Invalid index")
+
+        if index == 0:
+            self.insert_at_beginning(data)
+            return
+
+        count = 0
+        itr = self.head
+        while itr:
+            if count == index - 1:
+                # the previous element's next is this new node's next
+                node = Node(data, itr.next)
+                # the next element of the current element is the new node
+                itr.next = node
+                break
+
+            itr = itr.next
+            count += 1
+
 
 if __name__ == '__main__':
     # create a linkedlist object
@@ -99,5 +119,7 @@ if __name__ == '__main__':
     ll.insert_at_end(79)
     # removes banana :(
     ll.remove_at(2)
+    # insert the yummy figs
+    ll.insert_at(4, "figs")
     ll.prnt()
     print("length", ll.get_length())
