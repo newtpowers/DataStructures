@@ -54,6 +54,40 @@ class LinkedList:
             self.insert_at_end(data)
 
 
+    def get_length(self):
+        count = 0
+        itr = self.head
+        while itr:
+            count += 1
+            itr = itr.next
+        return count
+
+
+    def remove_at(self, index):
+        # throw error if outside of boundary
+        if index<0 or index >= self.get_length():
+            raise Exception("Invalid index")
+
+        # trying to remove a head
+        if index == 0:
+            # the new head of the data is the next node because
+            # the head is removed (decapitated haha)
+            self.head = self.head.next
+            return
+
+        count = 0
+        itr = self.head
+        # iterate through linkedlist
+        while itr:
+            # stop at previous element and have it point to the element
+            # after the one you want to remove, to remove the unwanted element
+            if count == index - 1:
+                itr.next = itr.next.next
+
+            itr = itr.next
+            count += 1
+
+
 if __name__ == '__main__':
     # create a linkedlist object
     ll = LinkedList()
@@ -63,4 +97,7 @@ if __name__ == '__main__':
     ll.insert_at_beginning(5)
     ll.insert_at_beginning(89)
     ll.insert_at_end(79)
+    # removes banana :(
+    ll.remove_at(2)
     ll.prnt()
+    print("length", ll.get_length())
