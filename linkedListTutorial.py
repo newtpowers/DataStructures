@@ -107,19 +107,77 @@ class LinkedList:
             itr = itr.next
             count += 1
 
+    def insert_after_value(self, data_after, data_to_insert):
+        # Search for first occurance of data_after value in linked list
+        # Now insert data_to_insert after data_after node
+        itr = self.head
+
+        if itr is None:
+            # aka return nothing
+            return
+
+        while itr:
+            # when the current node is the node searched for
+            if itr.data == data_after:
+                # the previous element's next is this new node's next
+                node = Node(data_to_insert, itr.next)
+                itr.next = node
+                break
+            itr = itr.next
+
+    def remove_by_value(self, data):
+        itr = self.head
+
+        if itr is None:
+            return
+
+        if itr.data == data:
+            self.remove_at(0)
+
+        while itr:
+            # comment
+            if itr.next is None:
+                return
+            if itr.next.data == data:
+                # if the next is the last element in the list, so there is no .next.next
+                # if itr.next.next.data is None:
+                #    itr.next = None
+                #    break
+                itr.next = itr.next.next
+                break
+            itr = itr.next
+
+
+
+
 
 if __name__ == '__main__':
     # create a linkedlist object
-    ll = LinkedList()
+    # ll = LinkedList()
     # insert a list of values
-    ll.insert_values(["banana", "mango", "grapes", "orange"])
+    # ll.insert_values(["banana", "mango", "grapes", "orange"])
     # insert nodes at the beginning and end
-    ll.insert_at_beginning(5)
-    ll.insert_at_beginning(89)
-    ll.insert_at_end(79)
+    # ll.insert_at_beginning(5)
+    # ll.insert_at_beginning(89)
+    # ll.insert_at_end(79)
     # removes banana :(
-    ll.remove_at(2)
+    # ll.remove_at(2)
     # insert the yummy figs
-    ll.insert_at(4, "figs")
+    # ll.insert_at(4, "figs")
+    # ll.prnt()
+    # print("length", ll.get_length())
+
+    ll = LinkedList()
+    ll.insert_values(["banana", "mango", "grapes", "orange"])
     ll.prnt()
-    print("length", ll.get_length())
+    ll.insert_after_value("mango", "apple")  # insert apple after mango
+    ll.prnt()
+    ll.remove_by_value("orange")  # remove orange from linked list
+    ll.prnt()
+    ll.remove_by_value("figs")
+    ll.prnt()
+    ll.remove_by_value("banana")
+    ll.remove_by_value("mango")
+    ll.remove_by_value("apple")
+    ll.remove_by_value("grapes")
+    ll.prnt()
